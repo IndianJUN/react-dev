@@ -30228,6 +30228,19 @@ const useDropdown = (label, defaultState, options) => {
 
 var _default = useDropdown;
 exports.default = _default;
+},{"react":"../node_modules/react/index.js"}],"ThemeContext.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = require("react");
+
+const ThemeContext = (0, _react.createContext)(["green", () => {}]);
+var _default = ThemeContext;
+exports.default = _default;
 },{"react":"../node_modules/react/index.js"}],"SearchParams.js":[function(require,module,exports) {
 "use strict";
 
@@ -30243,6 +30256,8 @@ var _pet = _interopRequireWildcard(require("@frontendmasters/pet"));
 var _Results = _interopRequireDefault(require("./Results"));
 
 var _useDropdown5 = _interopRequireDefault(require("./useDropdown"));
+
+var _ThemeContext = _interopRequireDefault(require("./ThemeContext"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30283,6 +30298,11 @@ const SearchParams = () => {
         pets = _useState6[0],
         setPets = _useState6[1];
 
+  const _useContext = (0, _react.useContext)(_ThemeContext.default),
+        _useContext2 = _slicedToArray(_useContext, 2),
+        theme = _useContext2[0],
+        setTheme = _useContext2[1];
+
   async function requestPets() {
     const _ref = await _pet.default.animals({
       location,
@@ -30321,14 +30341,30 @@ const SearchParams = () => {
     value: location,
     placeholder: "Location",
     onChange: e => setLocation(e.target.value)
-  })), _react.default.createElement(AnimalDropdown, null), _react.default.createElement(BreedDropdown, null), _react.default.createElement("button", null, "Submit")), _react.default.createElement(_Results.default, {
+  })), _react.default.createElement(AnimalDropdown, null), _react.default.createElement(BreedDropdown, null), _react.default.createElement("label", {
+    htmlFor: "theme"
+  }, "Theme", _react.default.createElement("select", {
+    value: theme,
+    onChange: e => SVGTextPathElement(e.target.value),
+    onBlur: e => SVGTextPathElement(e.target.value)
+  }), _react.default.createElement("option", {
+    value: "peru"
+  }, "Peru"), _react.default.createElement("option", {
+    value: "derkblue"
+  }, "Dark Blue"), _react.default.createElement("option", {
+    value: "chartreuse"
+  }, "Chartreuse")), _react.default.createElement("button", {
+    style: {
+      color: theme
+    }
+  }, "Submit")), _react.default.createElement(_Results.default, {
     pets: pets
   }));
 };
 
 var _default = SearchParams;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","@frontendmasters/pet":"../node_modules/@frontendmasters/pet/index.js","./Results":"Results.js","./useDropdown":"useDropdown.js"}],"Carousel.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","@frontendmasters/pet":"../node_modules/@frontendmasters/pet/index.js","./Results":"Results.js","./useDropdown":"useDropdown.js","./ThemeContext":"ThemeContext.js"}],"Carousel.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -30478,7 +30514,17 @@ var _Carousel = _interopRequireDefault(require("./Carousel"));
 
 var _ErrorBoundary = _interopRequireDefault(require("./ErrorBoundary"));
 
+var _ThemeContext = _interopRequireDefault(require("./ThemeContext"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -30527,7 +30573,16 @@ class Details extends _react.default.Component {
       className: "details"
     }, _react.default.createElement(_Carousel.default, {
       media: media
-    }), _react.default.createElement("div", null, _react.default.createElement("h1", null, name), _react.default.createElement("h2", null, `${animal} - ${breed} - ${location} `), _react.default.createElement("button", null, "Adopt ", name), _react.default.createElement("p", null, description)));
+    }), _react.default.createElement("div", null, _react.default.createElement("h1", null, name), _react.default.createElement("h2", null, `${animal} - ${breed} - ${location} `), _react.default.createElement(_ThemeContext.default.Consumer, null, (_ref2) => {
+      let _ref3 = _slicedToArray(_ref2, 1),
+          theme = _ref3[0];
+
+      return _react.default.createElement("button", {
+        style: {
+          backgroundColor: theme
+        }
+      }, "Adopt ", name);
+    }), _react.default.createElement("p", null, description)));
   }
 
 }
@@ -30537,10 +30592,10 @@ function DetailsWthErrorBoundary(props) {
     id: props.id
   }));
 }
-},{"react":"../node_modules/react/index.js","@frontendmasters/pet":"../node_modules/@frontendmasters/pet/index.js","./Carousel":"Carousel.js","./ErrorBoundary":"ErrorBoundary.js"}],"App.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","@frontendmasters/pet":"../node_modules/@frontendmasters/pet/index.js","./Carousel":"Carousel.js","./ErrorBoundary":"ErrorBoundary.js","./ThemeContext":"ThemeContext.js"}],"App.js":[function(require,module,exports) {
 "use strict";
 
-var _react = _interopRequireDefault(require("react"));
+var _react = _interopRequireWildcard(require("react"));
 
 var _reactDom = _interopRequireDefault(require("react-dom"));
 
@@ -30550,20 +30605,27 @@ var _SearchParams = _interopRequireDefault(require("./SearchParams"));
 
 var _Detail = _interopRequireDefault(require("./Detail"));
 
+var _ThemeContext = _interopRequireDefault(require("./ThemeContext"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
 const App = () => {
-  return _react.default.createElement(_react.default.StrictMode, null, _react.default.createElement("div", null, _react.default.createElement("header", null, _react.default.createElement(_router.Link, {
+  const themeHook = (0, _react.useState)('Peru');
+  return _react.default.createElement(_react.default.StrictMode, null, _react.default.createElement(_ThemeContext.default.Provider, {
+    value: themeHook
+  }, _react.default.createElement("div", null, _react.default.createElement("header", null, _react.default.createElement(_router.Link, {
     to: "/"
   }, "Adoupt Me!")), _react.default.createElement(_router.Router, null, _react.default.createElement(_SearchParams.default, {
     path: "/"
   }), _react.default.createElement(_Detail.default, {
     path: "/details/:id"
-  }))));
+  })))));
 };
 
 _reactDom.default.render(_react.default.createElement(App, null), document.getElementById("root"));
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","@reach/router":"../node_modules/@reach/router/es/index.js","./SearchParams":"SearchParams.js","./Detail":"Detail.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","@reach/router":"../node_modules/@reach/router/es/index.js","./SearchParams":"SearchParams.js","./Detail":"Detail.js","./ThemeContext":"ThemeContext.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -30591,7 +30653,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58348" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52939" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
